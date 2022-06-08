@@ -1,0 +1,63 @@
+	.text
+	.file	"square.c"
+	.globl	main                            # -- Begin function main
+	.p2align	4, 0x90
+	.type	main,@function
+main:                                   # @main
+	.cfi_startproc
+# %bb.0:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$32, %rsp
+	movl	$0, -4(%rbp)
+	movabsq	$.L.str, %rdi
+	movb	$0, %al
+	callq	printf
+	movabsq	$.L.str.1, %rdi
+	leaq	-8(%rbp), %rsi
+	movl	%eax, -16(%rbp)                 # 4-byte Spill
+	movb	$0, %al
+	callq	__isoc99_scanf
+	movl	-8(%rbp), %ecx
+	imull	-8(%rbp), %ecx
+	movl	%ecx, -12(%rbp)
+	movl	-12(%rbp), %esi
+	movabsq	$.L.str.2, %rdi
+	movl	%eax, -20(%rbp)                 # 4-byte Spill
+	movb	$0, %al
+	callq	printf
+	xorl	%ecx, %ecx
+	movl	%eax, -24(%rbp)                 # 4-byte Spill
+	movl	%ecx, %eax
+	addq	$32, %rsp
+	popq	%rbp
+	.cfi_def_cfa %rsp, 8
+	retq
+.Lfunc_end0:
+	.size	main, .Lfunc_end0-main
+	.cfi_endproc
+                                        # -- End function
+	.type	.L.str,@object                  # @.str
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.L.str:
+	.asciz	"Enter a number: "
+	.size	.L.str, 17
+
+	.type	.L.str.1,@object                # @.str.1
+.L.str.1:
+	.asciz	"%d"
+	.size	.L.str.1, 3
+
+	.type	.L.str.2,@object                # @.str.2
+.L.str.2:
+	.asciz	"%d\n"
+	.size	.L.str.2, 4
+
+	.ident	"Debian clang version 11.0.1-2"
+	.section	".note.GNU-stack","",@progbits
+	.addrsig
+	.addrsig_sym printf
+	.addrsig_sym __isoc99_scanf
