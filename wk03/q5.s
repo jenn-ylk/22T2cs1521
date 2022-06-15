@@ -2,14 +2,24 @@
 # i in $t0
 main:
 
-    li      $t0, 0      # i = 0
+    li      $t0, 0          # i = 0
+    la      $t1, numbers    # address or numbers[0]
 
 write_start:
-    # TODO: set this up to be a proper loop (condition, jump to start, iterate counter)
+    # set this up to be a proper loop (condition, jump to start, iterate counter)
+    bge     $t0, 10, write_end
+    
     li      $v0, 5
     syscall
 
-    # TODO: add in some code that will put the read value into the array
+    # add in some code that will put the read value into the array
+    mul     $t2, $t0, 4
+    add     $t3, $t2, $t1
+
+    sw      $v0, ($t3)
+
+    addi    $t0, $t0, 1
+    j       write_start
 
 write_end:
     # for this exercise, either insert your own loop to read this content, 
@@ -20,8 +30,8 @@ write_end:
 .data
 
 numbers:
-    # TODO: fill this with the necessary zeroed array (use .space if the data should be uninitialised)
-
+    # fill this with the necessary zeroed array (use .space if the data should be uninitialised)
+    .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 # #include <stdio.h>
 

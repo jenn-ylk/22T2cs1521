@@ -11,7 +11,7 @@ int main (void) {
 
     printf("\nstring containts\"%s\"\n\n", string);
     printf("The address for string[0] is %p, containing %c\n", &string[0], string[0]);
-    printf("The address for string[1] is %p, containing %c\n", &string[0] + 1, *(&string[0] + 1));
+    printf("The address for string[1] is %p, containing %c\n", (string + 1), *(&string[0] + 1));
 
     return 0;
 }
