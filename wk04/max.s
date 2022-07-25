@@ -24,22 +24,36 @@ main:                               #
     jr      $ra
 
 
-
 max:
 
-    # read in the first element, from here either 
-    # go to the recursive case, or end condition
+    lw      $s0, ($a0)              # first_element = a[0] - note, this is an s register, not temp
+
+    bne     $a1, 1, recurse_max
+    move    $v0, $s0
+    j       return_max
 
 recurse_max:
 
-    # set up and do a recursive call 
-    # max(&a[1], length - 1)
+    begin
+    push    $ra
+    push    $s0
+
+    addi    $a0, $a0, 4             # reduce length, move to next number
+    addi    $a1, $a1, -1
+
+    jal     max                     # do recursive call here
+    move    $t0, $v0
+
+    ble     $s0, $t0, swap_max      # if (first_element > max_so_far)
+    move    $t0, $s0                # keeps first element if it's greater
 
 swap_max:
+    move    $v0, $t0
 
 return_max:
-    # end the function, make sure to pop any registers from the stack
-
+    pop     $s0
+    pop     $ra
+    end
     jr      $ra
 
 
